@@ -4,6 +4,9 @@
 
 This project is a machine learning project that predicts whether a player is predicted to be banned for botting on Old School Runescape.
 
+### Future public availability
+- In future the website will collect data and a new train script will be required.
+- At this point the training and datasets for training will be made public.
 
 ### Purpose
 
@@ -18,8 +21,8 @@ The data was recorded over a time period of roughly 3 months and uses the final 
 
 
 
-# Setup 
-
+# Setup
+## (N/A) Datasets not yet provided
 
 # Database
 The database expects environment variables to be set to get the authentication of the databases.
