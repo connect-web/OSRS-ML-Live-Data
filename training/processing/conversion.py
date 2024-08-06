@@ -26,7 +26,8 @@ def process_row(row):
     """
     skill_indexes = [3, 6]
     # Remove overall key
-    for i in skill_indexes: row[i] = remove_overall(row[i])
+    for i in skill_indexes:
+        row[i] = remove_overall(row[i])
     # Daily rate calculations
     row = daily_rate(row)
     # Convert Dict to Array

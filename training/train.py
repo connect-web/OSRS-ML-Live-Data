@@ -23,8 +23,14 @@ class TrainExperiments(Experiment):
 
     def __init__(self, mode = 'skills'):
         self.mode = mode
-        activities = Leaderboards.get_skill_names(keep_overall=False) if self.mode == 'skills' \
-            else activities = Leaderboards.get_minigame_names()
+        activities = None
+
+        if self.mode == 'skills':
+            activities = Leaderboards.get_skill_names(keep_overall=False)
+        elif self.mode == 'minigames':
+            activities = Leaderboards.get_minigame_names()
+        else:
+            quit(print('Invalid mode.'))
 
         self.activities = [activity for activity in activities if activity not in self.completed_activities]
         print(f'You have {len(self.activities)} activities to complete!')
@@ -129,6 +135,13 @@ class TrainExperiments(Experiment):
 
 
 if __name__ == '__main__':
-    TrainExperiments(mode='skills').run()
-    TrainExperiments(mode='minigames').run()
+    try:
+        TrainExperiments(mode='skills').run()
+    except:
+        pass
+    try:
+        TrainExperiments(mode='minigames').run()
+    except:
+        pass
+
     publish_best_experiments('v1')
