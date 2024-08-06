@@ -14,11 +14,10 @@ def run_inference():
     for activity_type, activities in ACTIVITIES.items():
         for activity in activities:
             print(f'Running inference for {activity}...')
-            usernames = inference(activity=activity, activity_type=activity_type)
-            print(f'Predicted {len(usernames)} bans for {activity}.')
-            if usernames:
-                player_ids = db.usernamesToPlayerIds(usernames)
-                db.submit_results(player_ids, activity, activity_type)
+            results = inference(activity=activity, activity_type=activity_type)
+            if results is not None:
+                print(f'Predicted {len(results)} players for {activity}.')
+                db.submit_results(results, activity, activity_type)
 
     db.close()
 
