@@ -9,10 +9,11 @@ client = mlflow.tracking.MlflowClient()
 
 MODELS_BY_NAME = get_models()
 
+
 def get_model_by_name(name):
     model_version = MODELS_BY_NAME.get(name)
     if model_version is None:
-        raise ValueError(f'Model with name {name} not found.')
+        raise ValueError(f'Model with name {name} not found. err')
     model_uri = model_version.source
     model = mlflow.pyfunc.load_model(model_uri)
     return model
