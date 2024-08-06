@@ -1,3 +1,5 @@
+import pandas as pd
+
 from .base.server_connection import ServerConnection
 
 class ResultsDatabase(ServerConnection):
@@ -19,17 +21,18 @@ class ResultsDatabase(ServerConnection):
                 player_ids.append(name_to_player_id[username])
         return player_ids
 
-    def submit_results(self, player_ids: list[int], activity: str, ActivityType: str):
+    def submit_results(self, results: pd.DataFrame, activity: str, ActivityType: str):
         """
         activity: name of skill / minigame
         ActivityType: (Skills) or (Minigames)
         """
         query = '''
-        INSERT INTO ML.results(PlayerId, Activity, ActivityType, TIME)
-        VALUES (%s, %s, %s, NOW())
-        on conflict do nothing
+        INSERT INTO ML.results(PlayerId, Duration, Bot, Activity, ActivityType, Time)
+        VALUES (%s, %s, %s::BOOLEAN, %s, %s, NOW())
+        -- on conflict do nothing
         '''
-        values = [(player_id, activity, ActivityType) for player_id in player_ids]
+
+        values = [(row[1], row[2], row[3], activity, ActivityType) for row in results.values.tolist()]
         self.post_many(query, values)
 
 
